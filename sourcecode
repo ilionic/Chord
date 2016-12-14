@@ -16,15 +16,16 @@ sevenths = "off"
 
 
 def setup():
-    
+
     size(700, 700)
     frameRate(30)
     background(0)
+    pixelDensity(2)
     global myBus
     myBus = MidiBus(this, -1, "Bus 1")
-    
+
     mainConstruct()
-        
+
     pushStyle()
     textAlign(LEFT)
     text("[M] Major/Minor", w/20, w/12)
@@ -32,13 +33,13 @@ def setup():
     text("[X] Sevenths: " + str(sevenths), w/20, w/20)
     text("[Z] Chords/Scales: " + str(CorS), w/20, w/30)
     popStyle()
-    
-     
+
+
 def draw():
-    sectors() 
-    
+    sectors()
+
 def mainConstruct():
-    
+
     for l in range(12):
         rad = l*30
         lineBig(rad)
@@ -62,7 +63,7 @@ def mainConstruct():
     textSize(12)
     text("Use numbers 1 to 7 on the computer keyboard to trigger chords and notes", width/2, height/1.03)
     popStyle()
-    
+
 
 def circlesbig(r):
     pushMatrix()
@@ -102,7 +103,7 @@ def lineBig(r):
     stroke(225)
     line(rbig, 0, cos(radians(ang))*rbig, sin(radians(ang))*rbig)
     popMatrix()
-    
+
 def lineSmall(r):
     pushMatrix()
     translate(width/2, height/2)
@@ -110,7 +111,7 @@ def lineSmall(r):
     stroke(225)
     line(0, w/10, w/-10, 0)
     popMatrix()
-    
+
 def keystext(r):
    keyname = dict()
    keyname['0'] = 'C'
@@ -136,7 +137,7 @@ def keystext(r):
    textSize(w/50)
    text(textforkey, 0, w/-4)
    popMatrix()
-    
+
    #Minor fifths
    pushMatrix()
    translate(width/2, height/2)
@@ -145,7 +146,7 @@ def keystext(r):
    textAlign(CENTER)
    textSize(w/100)
    text(textforkey, 0, w/-12.5)
-   popMatrix() 
+   popMatrix()
 
 def chprog(r):
     alignbump = width/-300
@@ -164,9 +165,9 @@ def chprog(r):
     text("III", sr/2, (0 - p) + alignbump)
     text("II", sr/-2, (0 - p) + alignbump)
     popMatrix()
-    
 
-def colourcircles(rot1, g, h, j): 
+
+def colourcircles(rot1, g, h, j):
     global a
     pushMatrix()
     translate(width/2, height/2)
@@ -177,12 +178,12 @@ def colourcircles(rot1, g, h, j):
     strokeWeight(3)
     noFill()
     ellipse(0, w/-5, w/5, w/5)
-    
+
     popMatrix()
     strokeWeight(1)
     noTint()
-    
-def highlights(key1, position):    
+
+def highlights(key1, position):
     notelist = ["C", "Db", "D", "Eb", "E", "F", "F#", "G", "Ab", "A", "Bb", "B"]
     chordroot_dict = {1:0, 2:2, 3:4, 4:5, 5:7, 6:9, 7:11}
     rot = (((int(notelist.index(position)) + int(chordroot_dict[key1]))* 7 )%12)*30
@@ -204,30 +205,30 @@ def highlights(key1, position):
             colourcircles(rot - 90, 0, 44, 225)
             colourcircles(rot + 30, 0, 225, 160)
             colourcircles(rot, 0, 185, 225)
-            
+
         elif key1 == 7 or key1 == 3 or key1 == 6:
             colourcircles(rot - 90, 0, 225, 0)
             colourcircles(rot + 180, 0, 225, 160)
             colourcircles(rot + 150, 0, 185, 225)
-            
-            
+
+
         elif key1 == 2:
             colourcircles(rot - 90, 0, 44, 225)
             colourcircles(rot + 180, 0, 225, 160)
-            colourcircles(rot, 0, 185, 225)           
-    
-    
+            colourcircles(rot, 0, 185, 225)
+
+
     small_C_highlights((((notelist.index(position)*7)-3)%12)*30, key1)
-    
-def scaleHighlights(key1, position):    
+
+def scaleHighlights(key1, position):
     notelist = ["C", "Db", "D", "Eb", "E", "F", "F#", "G", "Ab", "A", "Bb", "B"]
     chordroot_dict = {1:0, 2:2, 3:4, 4:5, 5:7, 6:9, 7:11}
     rot = (((int(notelist.index((position)) + mode) + int(chordroot_dict[key1]))* 7 )%12)*30
     if m == "major":
         colourcircles(rot, 0, 185, 225)
     elif m == "minor":
-        colourcircles(rot + 30, 0, 185, 225) 
-     
+        colourcircles(rot + 30, 0, 185, 225)
+
 def small_C_highlights(r, chord):
     pushMatrix()
     translate(width/2, height/2)
@@ -259,8 +260,8 @@ def small_C_highlights(r, chord):
         ellipse(p, sr/-2, w/50, w/50)
     def c1():
         ellipse((w/10)*3, 0, w/50, w/50)
-        
-        
+
+
     chordarray = []
     chordarray.append([2, 1, 1, 1, 1, 1, 1])
     chordarray.append([0, 2, 0, 0, 1, 0, 1])
@@ -269,7 +270,7 @@ def small_C_highlights(r, chord):
     chordarray.append([1, 0, 0, 0, 2, 1, 0])
     chordarray.append([0, 1, 0, 1, 1, 2, 0])
     chordarray.append([1, 0, 0, 0, 1, 0, 2])
-    
+
 
     sugchords = (chordarray[chord - 1])
     for num in range(7):
@@ -281,10 +282,10 @@ def small_C_highlights(r, chord):
             stroke(225)
             cons = "c" + str(int(num+1)) + "()"
             eval(cons)
-        
+
     popMatrix()
     strokeWeight(1)
-    
+
 def modeGen(a, b):
     modeArray = []
     modeArray.append([3, 5, 7, 8, 10, 12, 14, 15])
@@ -301,7 +302,7 @@ def modeName(modeNum):
     return modeSelector[modeNum]
 def keyPressed():
     background(0)
-    
+
     global m
     global sustain
     global mode
@@ -316,14 +317,14 @@ def keyPressed():
         try:
             key1 = int(key)
             if type(key1) == int and key1 <= 7:
-                
+
                 chord_const(key1, position)
                 highlights(key1, position)
-            
-                    
+
+
         except:
             pass
-        
+
         try:
             if key == "m":
                 if m == "major":
@@ -332,10 +333,10 @@ def keyPressed():
                 else:
                     m = "major"
                     mode = 0
-                    
+
         except:
             pass
-        
+
         try:
             if key == "x":
                 if sevenths == "on":
@@ -343,10 +344,10 @@ def keyPressed():
                 else:
                     sevenths = "on"
 
-                    
+
         except:
             pass
-        
+
         try:
             if key == CODED:
                 if keyCode == UP:
@@ -354,21 +355,21 @@ def keyPressed():
                 elif keyCode == DOWN:
                     if sustain > 0:
                         sustain = sustain - 50
-                        
-            
+
+
         except:
             pass
-        
+
         try:
             if key == "z":
                     CorS = "S"
         except:
             pass
-    
-                    
-        
+
+
+
         mainConstruct()
-    
+
         pushStyle()
         textAlign(LEFT)
         text("[M] Major/Minor", w/20, w/12)
@@ -376,11 +377,11 @@ def keyPressed():
         text("[X] Sevenths: " + str(sevenths), w/20, w/20)
         text("[Z] Chords/Scales: " + str(CorS), w/20, w/30)
         popStyle()
-    
-        
-        
+
+
+
     elif CorS == "S":
-        
+
         try:
             key1 = int(key)
             if type(key1) == int and key1 <= 8:
@@ -396,13 +397,13 @@ def keyPressed():
                     delay(sustain)
                     myBus.sendNoteOff(channel, note, velocity)
                     scaleHighlights(key1, position)
-                    
-        
-            
+
+
+
         except:
             pass
-            
-        
+
+
         try:
             if key == CODED:
                 if keyCode == UP:
@@ -416,13 +417,13 @@ def keyPressed():
                     mode = (mode - 1)%7
         except:
             pass
-            
+
         try:
             if key == "z":
                     CorS = "C"
         except:
             pass
-        
+
         try:
             if key == "m":
                 if m == "major":
@@ -431,13 +432,13 @@ def keyPressed():
                 else:
                     m = "major"
                     mode = 0
-                    
+
         except:
             pass
-                    
-        
+
+
         mainConstruct()
-    
+
         pushStyle()
         textAlign(LEFT)
         text("[M] Major/Minor", w/20, w/12)
@@ -445,9 +446,9 @@ def keyPressed():
         text("[LEFT/RIGHT] Mode Switch", w/20, w/20)
         text("[Z] Chords/Scales: " + str(CorS), w/20, w/30)
         pushStyle()
-    
 
-        
+
+
 
 def sectors():
     global position
@@ -458,10 +459,10 @@ def sectors():
     fill(0)
     noStroke()
     ellipse(width/2, height/2, w/10, w/10)
-    
+
     x = (mouseX - (width / 2))
     y = 0 - (mouseY - (height / 2))
-    
+
     if (((float(x))**2.0) + ((float(y))**2.0)) > ((float(w) / 3)**2.0):
             position = "C"
     else:
@@ -512,9 +513,9 @@ def sectors():
                     else:
                         position =  "Ab"
    ## indicators
-   
+
     if CorS == "C":
-        textAlign(CENTER, CENTER) 
+        textAlign(CENTER, CENTER)
         fill(225)
         textSize(w/20)
         text(position, width/2, height/2 - w/120)
@@ -533,26 +534,26 @@ def sectors():
         textSize(w/80)
         text(modeName(mode), width/2, height/2 - w/25)
         textSize(w/70)
-        
- 
+
+
 
 def chord_const(chord, key1):
     global lc
     global rn
     global sustain
-    
- 
-    
+
+
+
     notelist = ["C", "Db", "D", "Eb", "E", "F", "F#", "G", "Ab", "A", "Bb", "B"]
     if m == "major":
-    
+
         chordroot_dict = {1:0, 2:2, 3:4, 4:5, 5:7, 6:9, 7:11}
-    
+
     elif m == "minor":
-        
+
         chordroot_dict = {1:0, 2:2, 3:3, 4:5, 5:7, 6:8, 7:10}
-        
-        
+
+
     chordrootnumb = int(notelist.index(key1)) + int(chordroot_dict[chord])
     chordroot = notelist[chordrootnumb % 12]
     channel = 0
@@ -564,10 +565,10 @@ def chord_const(chord, key1):
     dimfifth = root + 6
     maj7th = root + 11
     min7th = root + 10
-    
+
     if sevenths == "on":
         if m == "major":
-        
+
             if chord== 1 or chord == 4:
                 myBus.sendNoteOn(channel, root, velocity)
                 myBus.sendNoteOn(channel, fifth, velocity)
@@ -579,9 +580,9 @@ def chord_const(chord, key1):
                 myBus.sendNoteOff(channel, maj3rd, velocity)
                 myBus.sendNoteOff(channel, maj7th, velocity)
                 lc = str(notelist[chordrootnumb%12]) + " maj"
-            
-            
-        
+
+
+
             elif chord == 2 or chord == 3 or chord == 6:
                 myBus.sendNoteOn(channel, root, velocity)
                 myBus.sendNoteOn(channel, fifth, velocity)
@@ -593,7 +594,7 @@ def chord_const(chord, key1):
                 myBus.sendNoteOff(channel, min3rd, velocity)
                 myBus.sendNoteOff(channel, min7th, velocity)
                 lc = str(notelist[chordrootnumb%12]) + " min"
-                
+
             if chord== 5:
                 myBus.sendNoteOn(channel, root, velocity)
                 myBus.sendNoteOn(channel, fifth, velocity)
@@ -605,9 +606,9 @@ def chord_const(chord, key1):
                 myBus.sendNoteOff(channel, maj3rd, velocity)
                 myBus.sendNoteOff(channel, min7th, velocity)
                 lc = str(notelist[chordrootnumb%12]) + " maj"
-            
-                
-                
+
+
+
             elif chord == 7:
                 myBus.sendNoteOn(channel, root, velocity)
                 myBus.sendNoteOn(channel, dimfifth, velocity)
@@ -619,11 +620,11 @@ def chord_const(chord, key1):
                 myBus.sendNoteOff(channel, min3rd, velocity)
                 myBus.sendNoteOff(channel, min7th, velocity)
                 lc = str(notelist[chordrootnumb%12]) + " dim"
-            
-                
+
+
         elif m == "minor":
             if chord== 1 or chord== 4 or chord== 5:
-                
+
                 myBus.sendNoteOn(channel, root, velocity)
                 myBus.sendNoteOn(channel, fifth, velocity)
                 myBus.sendNoteOn(channel, min3rd, velocity)
@@ -634,9 +635,9 @@ def chord_const(chord, key1):
                 myBus.sendNoteOff(channel, min3rd, velocity)
                 myBus.sendNoteOff(channel, min7th, velocity)
                 lc = str(notelist[chordrootnumb%12]) + " min"
-            
-                
-        
+
+
+
             elif chord== 3 or chord== 6:
                 myBus.sendNoteOn(channel, root, velocity)
                 myBus.sendNoteOn(channel, fifth, velocity)
@@ -648,7 +649,7 @@ def chord_const(chord, key1):
                 myBus.sendNoteOff(channel, maj3rd, velocity)
                 myBus.sendNoteOff(channel, maj7th, velocity)
                 lc = str(notelist[chordrootnumb%12]) + " maj"
-                
+
             elif chord== 7:
                 myBus.sendNoteOn(channel, root, velocity)
                 myBus.sendNoteOn(channel, fifth, velocity)
@@ -660,9 +661,9 @@ def chord_const(chord, key1):
                 myBus.sendNoteOff(channel, maj3rd, velocity)
                 myBus.sendNoteOff(channel, min7th, velocity)
                 lc = str(notelist[chordrootnumb%12]) + " maj"
-            
-                
-                
+
+
+
             elif chord == 2:
                 myBus.sendNoteOn(channel, root, velocity)
                 myBus.sendNoteOn(channel, dimfifth, velocity)
@@ -674,14 +675,14 @@ def chord_const(chord, key1):
                 myBus.sendNoteOff(channel, min3rd, velocity)
                 myBus.sendNoteOff(channel, min7th, velocity)
                 lc = str(notelist[chordrootnumb%12]) + " dim"
-                
+
     elif sevenths == "off":
-          
-          
+
+
         if m == "major":
-        
+
             if chord== 1 or chord== 4 or chord== 5:
-                
+
                 myBus.sendNoteOn(channel, root, velocity)
                 myBus.sendNoteOn(channel, fifth, velocity)
                 myBus.sendNoteOn(channel, maj3rd, velocity)
@@ -698,7 +699,7 @@ def chord_const(chord, key1):
                 myBus.sendNoteOff(channel, root, velocity)
                 myBus.sendNoteOff(channel, fifth, velocity)
                 myBus.sendNoteOff(channel, min3rd, velocity)
-                lc = str(notelist[chordrootnumb%12]) + " min"    
+                lc = str(notelist[chordrootnumb%12]) + " min"
             elif chord == 7:
                 myBus.sendNoteOn(channel, root, velocity)
                 myBus.sendNoteOn(channel, dimfifth, velocity)
@@ -708,11 +709,11 @@ def chord_const(chord, key1):
                 myBus.sendNoteOff(channel, dimfifth, velocity)
                 myBus.sendNoteOff(channel, min3rd, velocity)
                 lc = str(notelist[chordrootnumb%12]) + " dim"
-            
-                
+
+
         elif m == "minor":
             if chord== 1 or chord== 4 or chord== 5:
-                
+
                 myBus.sendNoteOn(channel, root, velocity)
                 myBus.sendNoteOn(channel, fifth, velocity)
                 myBus.sendNoteOn(channel, min3rd, velocity)
@@ -721,9 +722,9 @@ def chord_const(chord, key1):
                 myBus.sendNoteOff(channel, fifth, velocity)
                 myBus.sendNoteOff(channel, min3rd, velocity)
                 lc = str(notelist[chordrootnumb%12]) + " min"
-            
-                
-        
+
+
+
             elif chord== 7 or chord== 3 or chord== 6:
                 myBus.sendNoteOn(channel, root, velocity)
                 myBus.sendNoteOn(channel, fifth, velocity)
@@ -733,9 +734,9 @@ def chord_const(chord, key1):
                 myBus.sendNoteOff(channel, fifth, velocity)
                 myBus.sendNoteOff(channel, maj3rd, velocity)
                 lc = str(notelist[chordrootnumb%12]) + " maj"
-            
-                
-                
+
+
+
             elif chord == 2:
                 myBus.sendNoteOn(channel, root, velocity)
                 myBus.sendNoteOn(channel, dimfifth, velocity)
@@ -745,5 +746,3 @@ def chord_const(chord, key1):
                 myBus.sendNoteOff(channel, dimfifth, velocity)
                 myBus.sendNoteOff(channel, min3rd, velocity)
                 lc = str(notelist[chordrootnumb%12]) + " dim"
-             
-    
